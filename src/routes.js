@@ -56,6 +56,7 @@ render(){
        <PrivateRouteEmpleados exact path = "/passwordUpdate" component={passwordUpdate}/> 
        {/* <Route exact path={"/panel"} component={panelConexion}/> */}
        {/* <Route exact path={"/panelPrueba"} component={panelPrueba}/> */}
+       
        <PrivateRouteAdmin exact path={"/sideNavAdmin"} component={sideNavAdmin}/>
        <PrivateRouteAdmin exact path={"/area"} component={catalogoArea}/>
        <PrivateRouteAdmin exact path={"/oficinas"} component={catalogoOficinas}/>
@@ -64,6 +65,8 @@ render(){
        <PrivateRouteAdmin exact path={"/roles"} component={catalogoRoles}/>
        <PrivateRouteAdmin exact path={"/cambioPass"} component={pass}/>
        <Route exact path= "/sin" component={singUp}/>
+
+       {/* <Route exact path={"/sideNavAdmin"} component={sideNavAdmin}/> */}
       </main>  
        </Switch>          
        </Router>
