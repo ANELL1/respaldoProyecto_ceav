@@ -305,7 +305,7 @@ class signUpEmpleado extends Component{
           }).catch((err) => {
             console.log("error", err.response);
           });   
-            // window.location.reload() 
+            window.location.reload() 
                
       }else{
           swal({
