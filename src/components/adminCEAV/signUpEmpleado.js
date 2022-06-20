@@ -257,7 +257,7 @@ class signUpEmpleado extends Component{
         let fechaNotificacionAlta = this.state.fechaNotificacionAlta
         let fechaNotificacionBaja = this.state.fechaNotificacionBaja
         let pass = this.state.pass        
-        let departamento = this.state.departamento 
+        let departamento = this.state.departamento.toUpperCase() 
         let fk_oficionas = this.state.fk_oficionas        
         let fk_area = this.state.fk_area
         let fk_puesto = this.state.fk_puesto
@@ -375,7 +375,7 @@ class signUpEmpleado extends Component{
         </MDBCol>
        <MDBCol>
         <Form.Item label="DEPARTAMENTO" >
-          <Input style={{ width: 400 }} placeholder="0000" id="departamento" type="departamento" name="text" onChange={this.onChangeInput} value={this.state.departamento} />
+          <Input style={{ width: 400 }}  id="departamento" type="departamento" name="text" onChange={this.onChangeInput} value={this.state.departamento} />
         </Form.Item>
         </MDBCol>
         <MDBCol>

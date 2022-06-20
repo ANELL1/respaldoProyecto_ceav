@@ -48,6 +48,7 @@ render(){
     <Router>
     <Switch>
       <main>  
+
        <Route exact path = "/" component={login}/>  
        <Route exact path={"/admin"} component={loginAdmin}/>
        <PrivateRouteEmpleados exact path={"/empleados"} component={dataEmpleados}/>    
@@ -64,7 +65,7 @@ render(){
        <PrivateRouteAdmin exact path={"/puesto"} component={catalogoPuesto}/>
        <PrivateRouteAdmin exact path={"/roles"} component={catalogoRoles}/>
        <PrivateRouteAdmin exact path={"/cambioPass"} component={pass}/>
-       <Route exact path= "/sin" component={singUp}/>
+       {/* <Route exact path= "/sin" component={singUp}/> */}
 
        {/* <Route exact path={"/sideNavAdmin"} component={sideNavAdmin}/> */}
       </main>  
