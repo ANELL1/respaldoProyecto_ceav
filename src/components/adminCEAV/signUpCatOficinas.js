@@ -85,7 +85,6 @@ class catalogoOficina extends Component{
             `  }           
          })
        .then(response => { 
-      console.log("Data oficinas",response.data.data.getTablaOficinas)
           this.setState({tablaOficina:response.data.data.getTablaOficinas}) 
         })
         .catch(err=>{
@@ -106,7 +105,6 @@ class catalogoOficina extends Component{
               `  }           
            })
          .then(response => { 
-        console.log("Data getTablaEstados",response.data.data.getTablaEstados)
             this.setState({tablaEstados:response.data.data.getTablaEstados}) 
           })
           .catch(err=>{
@@ -187,7 +185,6 @@ class catalogoOficina extends Component{
   }  
 
      handleChange1(value){
-      console.log("esto es value de estado",value)
          this.setState({estado:value})
      }
 
@@ -207,7 +204,6 @@ class catalogoOficina extends Component{
          let telefono4 = this.state.telefono4
          let telefono5 = this.state.telefono5
          let referencia = this.state.referencia
-       console.log("data a insertar",nombreOficina,calle,ciudad,colonia,estado,codigoPostal,telefono1)
         
         if(nombreOficina && calle && numExterior && ciudad && colonia  && estado && codigoPostal,telefono1){  
             axios({
@@ -224,7 +220,6 @@ class catalogoOficina extends Component{
            }
          })
            .then((response) => { 
-               console.log("esto es response",response)       
             if(response.data.data.signupCatOficina.message === "registro exitoso"){
                 swal({              
                title: "", 

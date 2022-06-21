@@ -79,7 +79,6 @@ class catalogoPuesto extends Component{
             `  }           
          })
        .then(response => { 
-         console.log("esto es response de get",response)
           this.setState({tablaPuestoANDNiveles:response.data.data.getTablaPuestoAndNivel}) 
         })
         .catch(err=>{
@@ -88,28 +87,26 @@ class catalogoPuesto extends Component{
     }
 
   onChangeInput = (e) =>{
-    // console.log("esto es onChangeInput",e)
+
     const {id,value} = e.target;
     this.setState({
         [id]:value
     })
 }
 onChangeInput2 = (e) =>{
-  // console.log("esto es onChangeInput",e)
+
   const {id,value} = e.target;
   this.setState({
       [id]:value
   })
 }
-onChangeInput3 = (e) =>{
-  // console.log("esto es onChangeInput",e)
+onChangeInput3 = (e) =>{  
   const {id,value} = e.target;
   this.setState({
       [id]:value
   })
 }
   handleChange(value){
-    console.log("esto es fk_puesto",value)
     this.setState({fk_Puesto:value})
   }
   onClear = ()=>{
@@ -118,8 +115,6 @@ onChangeInput3 = (e) =>{
     }       
   }
   editar(id){ 
-    console.log("id",id)
-    console.log("array",this.state.ArrayPuesto)
     this.setState({ArrayPuesto:id})  
     this.setState({
       id_puestoUpdate:id.id_puesto,
@@ -170,7 +165,6 @@ onChangeInput3 = (e) =>{
       }
     })
       .then((response) => { 
-          console.log("esto es response",response)       
        if(response.data.data.signupCatPuesto.message === "registro exitoso"){
            swal({              
           title: "", 
@@ -213,7 +207,7 @@ onSubmitBtn2 = async (e)=>{
     let idUpdate = this.state.idUpdate
     let nivelUpdate = this.state.nivelUpdate
    
-    console.log("idUpdate",idUpdate)
+    
  if(nombrepuestoUpdate && nivelUpdate){  
   await   axios({
     url: API,
@@ -270,7 +264,6 @@ onSubmitBtn2 = async (e)=>{
    onSubmitBtn3 =(e)=>{
     let fk_puesto = this.state.fk_Puesto
     let nivel = this.state.nivel.toUpperCase()
-    // console.log("fk_puesto",fk_puesto,"nivel",nivel)
    if(fk_puesto && nivel ){  
        axios({
       url: API,
@@ -286,7 +279,6 @@ onSubmitBtn2 = async (e)=>{
       }
     })
       .then((response) => { 
-          console.log("esto es response",response)       
        if(response.data.data.sigupCatNiveles.message === "registro exitoso"){
            swal({              
           title: "", 

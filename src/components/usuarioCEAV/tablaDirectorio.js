@@ -37,8 +37,6 @@ class Index extends Component{
     });
   }
   async componentWillMount(){
-    // let array =  []    
-    //  let fk_empresa =  localStorage.getItem("fk_empresa")
      await axios({
             url:API,
             method:'post',
@@ -85,10 +83,8 @@ class Index extends Component{
                 `  }           
              })
            .then(response => { 
-          console.log("Data Empleado",response.data.data.getTablaDataEmpleado)
-            // array.push(datos.data.data.getTablaDataEmpleado)
+            console.log("estro es data",response)
               this.setState({tablaEmpledos:response.data.data.getTablaDataEmpleado}) 
-              // console.log("esto es la tabla empleados",this.state.tablaEmpledos)
             })
             .catch(err=>{
                console.log('error' ,err.response)

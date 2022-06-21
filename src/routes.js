@@ -3,25 +3,19 @@ import {BrowserRouter as Router , Switch ,Route, Redirect} from 'react-router-do
 import './App.css';
 
 import login from './components/usuarioCEAV/login'
-// import index from './components/usuarioCEAV/tablaDirectorio'
 import passwordUpdate from './components/usuarioCEAV/changePAssword'
 import singUp from './components/adminCEAV/signUpEmpleado'
 import checkTokenEmpleados from './components/resolvers/checkTokenEmpleados';
 import side from './components/usuarioCEAV/sidenav'
 import miCuenta from './components/usuarioCEAV/miCuenta'
-// import catalogo from './components/adminCEAV/sigCatalogo'
-
-// import catalogoPuesto from './components/adminCEAV/signUpCatPuestos'
-
-// import sideNavAdmin from './components/adminCEAV/sideNavAdmin'
 
 import panelConexion from './components/panelConexion/panelConexion'
 
 import dataEmpleados from './components/usuarioCEAV/tablaDirectorio'
-import panelPrueba from './components/adminCEAV/panelPrueba'
-// import conexion  from './components/adminCEAV/node'
 
 
+//  *****************DIRECTORIO***********
+import Dashboard from './components/usuarioCEAV/dashboard';
 // *******PANEL ADMIN *************
 import checkTokenAdmin from './components/resolvers/checkTokenAdmin';
 import loginAdmin from './components/adminCEAV/loginAdmin'
@@ -49,7 +43,8 @@ render(){
     <Switch>
       <main>  
 
-       <Route exact path = "/" component={login}/>  
+       <Route exact path = "/" component={Dashboard}/>  
+       
        <Route exact path={"/admin"} component={loginAdmin}/>
        <PrivateRouteEmpleados exact path={"/empleados"} component={dataEmpleados}/>    
        <PrivateRouteEmpleados exact path={"/side"} component={side}/>

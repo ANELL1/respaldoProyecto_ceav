@@ -64,7 +64,6 @@ class signUpEmpleado extends Component{
             `  }           
          })
        .then(response => { 
-         console.log("esto es response de get",response)
           this.setState({tablaPuesto:response.data.data.getTablaPuesto}) 
         })
         .catch(err=>{
@@ -120,8 +119,7 @@ class signUpEmpleado extends Component{
                 }
                 `  }           
              })
-           .then(response => { 
-          console.log("Data oficinas",response.data.data.getTablaOficinas)
+           .then(response => {           
               this.setState({tablaOficina:response.data.data.getTablaOficinas}) 
             })
             .catch(err=>{
@@ -181,7 +179,6 @@ class signUpEmpleado extends Component{
               `  }           
            })
          .then(response => { 
-           console.log("esto es response de get",response)
             this.setState({getTablaNivel:response.data.data.getTablaNivel}) 
           })
           .catch(err=>{
@@ -191,8 +188,7 @@ class signUpEmpleado extends Component{
     handleChange4(value){
       this.setState({fk_personal:value})
     }
-    handleChange5(value){
-      console.log("handleChange5",value)
+    handleChange5(value){      
       this.setState({fk_nivel:value})
     }
 

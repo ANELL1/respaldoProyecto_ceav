@@ -42,12 +42,15 @@ class tablaDataEmpleado extends Component{
       puestoUpdate:'',
       id_personalUpdate:'',
       tipoPersonalUpdate:'',
+      id_nivelUpdate:'',
+      nombreNivelUpdate:'',
       fk_puesto:'',
       arrayOficina:[],
       arrayArea:[],
       arrayPersonal:[],
       arrayPuesto:[],
       getTablaNivel:[],
+      fk_nivelUpdate:''
       
     }
     this.toggle = this.toggle.bind(this) 
@@ -63,7 +66,7 @@ class tablaDataEmpleado extends Component{
       modal2: !this.state.modal2
     });
   } 
-  componentDidMount(){
+  componentDidMount()  {
       axios({
             url:API,
             method:'post',
@@ -213,8 +216,29 @@ class tablaDataEmpleado extends Component{
                 .catch(err=>{
                    console.log('error' ,err.response)
                 }) 
-               
+              
+             axios({
+                  url:API,
+                  method:'post',
+                  data:{
+                    query:`
+                      query{   
+                        getTablalistaNivel(data:"${[]}"){
+                          id
+                          nivel                                               
+                          message
+                          } 
+                      }
+                      `  }           
+                   })
+                 .then(response => { 
+                    this.setState({getTablaNivel:response.data.data.getTablalistaNivel}) 
+                  })
+                  .catch(err=>{
+                     console.log('error' ,err.response)
+                  }) 
     }
+
     onChangeInput2 =(e)=>{
       const {id,value} = e.target;
       this.setState({
@@ -222,36 +246,7 @@ class tablaDataEmpleado extends Component{
       })
     } 
 
-  //   handleChange3(value) { 
-  //     console.log("esto es value",value)
-  //     this.setState({fk_puesto:value}) 
-  //     axios({
-  //       url:API,
-  //       method:'post',
-  //       data:{
-  //         query:`
-  //           query{   
-  //             getTablaNivel(data:"${[value]}"){
-  //               id
-  //               nivel
-  //               fk_puesto
-  //               message
-  //               } 
-  //           }
-  //           `  }           
-  //        })
-  //      .then(response => { 
-  //        console.log("esto es response de get",response)
-  //         this.setState({getTablaNivel:response.data.data.getTablaNivel}) 
-  //       })
-  //       .catch(err=>{
-  //          console.log('error' ,err.response)
-  //       })
-  // }
-
-
     editar(id){
-      console.log("esto es id de editar",id)
       this.setState({arrayEmpleados:id})
       this.setState({
         id_empleadoUpdate:id.id_empleado,
@@ -272,7 +267,11 @@ class tablaDataEmpleado extends Component{
         puestoUpdate:id.puesto,
         id_personalUpdate:id.id_personal,
         tipoPersonalUpdate:id.tipoPersonal,
-        fk_puesto:id.fk_puesto
+        fk_puesto:id.fk_puesto,
+        fk_nivelUpdate:id.fk_nivel,
+        id_nivelUpdate:id.id,
+        departamentoUpdate:id.departamento
+        // fk_nivelUpdate:id.nivel
       })   
       this.setState({
         modal:!this.state.modal
@@ -300,28 +299,33 @@ class tablaDataEmpleado extends Component{
       let telefono = this.state.telefonoUpdate
       let ext = this.state.extUpdate 
       let statusEmpleado = this.state.statusEmpleadoUpdate
+      let departamento = this.state.departamentoUpdate.toUpperCase()
       let fk_oficinas = this.state.id_oficinaUpdate
       let fk_area = this.state.id_areaUpdate
       let fk_puesto = this.state.id_puestoUpdate
       let fk_personal = this.state.id_personalUpdate
-
-       console.log("id_empleado",id_empleado,"nombre",nombre,"apellidos",apellidos,"curp",curp,"rfc",rfc,"correo",correo,"numEmpleado",numEmpleado)
-      if(  nombre && apellidos  && curp && rfc &&  correo && numEmpleado && telefono && ext && statusEmpleado ){  
+      let fk_nivel = this.state.fk_nivelUpdate
+      // id_empleado,nombre,apellidos,curp,rfc,correo,numEmpleado,telefono,ext,statusEmpleado,departamento,
+      // fk_oficinas,fk_area,fk_puesto,fk_nivel,fk_personal
+ console.log("id_empleado",id_empleado,"nombre",nombre,"apellidos",apellidos,"curp",curp)
+ console.log("rfc",rfc,"correo",correo,"numEmpleado",numEmpleado,"telefono",telefono)
+ console.log("ext",ext,"statusEmpleado",statusEmpleado,"departamento",departamento,"fk_oficinas",fk_oficinas)
+ console.log("fk_area",fk_area,"fk_puesto",fk_puesto,"fk_personal",fk_personal,"fk_nivel",fk_nivel)
+      if( nombre && apellidos  &&  correo && numEmpleado && telefono  && statusEmpleado ){  
           axios({
          url: API,
          method: "post",
          data: {
            query: `
                    mutation{
-                    updateEmpleados(data:"${[id_empleado,nombre,apellidos,curp,rfc,correo,numEmpleado,telefono,ext,statusEmpleado,fk_oficinas,fk_area,fk_puesto,fk_personal]}"){  
+                    updateEmpleados(data:"${[id_empleado,nombre,apellidos,curp,rfc,correo,numEmpleado,telefono,ext,statusEmpleado,departamento,fk_oficinas,fk_area,fk_puesto,fk_nivel,fk_personal]}"){  
                        message
                         } 
                    }
                    `
          }
        })
-         .then((response) => {    
-           console.log("esto es response",response)    
+         .then((response) => {
           if(response.data.data.updateEmpleados.message === "actualizacion exitosa"){
              swal({              
              title:"Registro exitoso!",   
@@ -329,9 +333,9 @@ class tablaDataEmpleado extends Component{
              icon:"success",
              button:true
            }); 
-           setTimeout(function(){
-             window.location.href='/sideNavAdmin'
-              }, 1500); 
+          //  setTimeout(function(){
+          //    window.location.href='/sideNavAdmin'
+          //     }, 1500); 
          }else{
           swal({
              title:"Notificación del sistema",
@@ -361,7 +365,6 @@ class tablaDataEmpleado extends Component{
        let modal;
        let modal2;
        let infEmpleado = this.state.informacionEmpleado;
-   console.log("infEmpleado",infEmpleado)
       const options={ 
         filterType:"drowpdawn",
         responsive: "stacked",
@@ -474,7 +477,7 @@ class tablaDataEmpleado extends Component{
           <br></br>
           <Row>
           <Col xs="6">       
-            <label htmlFor="defaultFormLoginPasswordEx"> <strong>CURP: *</strong></label>
+            <label htmlFor="defaultFormLoginPasswordEx"> <strong>CURP: </strong></label>
                         <input                                          
                               id="curpUpdate"
                               type="text"
@@ -485,7 +488,7 @@ class tablaDataEmpleado extends Component{
                               />
             </Col>  
             <Col xs="6">       
-            <label htmlFor="defaultFormLoginPasswordEx"> <strong>RFC: *</strong></label>
+            <label htmlFor="defaultFormLoginPasswordEx"> <strong>RFC: </strong></label>
                         <input                                          
                               id="rfcUpdate"
                               type="text"
@@ -524,7 +527,7 @@ class tablaDataEmpleado extends Component{
           <br></br>
           <Row>
           <Col xs="6">       
-            <label htmlFor="defaultFormLoginPasswordEx"> <strong>Ext: *</strong></label>
+            <label htmlFor="defaultFormLoginPasswordEx"> <strong>Ext: </strong></label>
                         <input                                          
                               id="extUpdate"
                               type="text"
@@ -535,11 +538,11 @@ class tablaDataEmpleado extends Component{
                               />
             </Col>
             <Col xs="6">       
-            <label htmlFor="defaultFormLoginPasswordEx"> <strong>DEPARTAMENTO:</strong></label>
+            <label htmlFor="defaultFormLoginPasswordEx"> <strong>DEPARTAMENTO: *</strong></label>
                         <input                                          
-                              id="extUpdate"
+                              id="departamentoUpdate"
                               type="text"
-                              name="extUpdate"
+                              name="departamentoUpdate"
                               onChange={this.onChangeInput2}
                               value={this.state.departamentoUpdate }
                               className="form-control"             
@@ -594,6 +597,7 @@ class tablaDataEmpleado extends Component{
              type="select"
              name="id_puestoUpdate"
              id="id_puestoUpdate"
+            //  onClick={(e)=>this.nivel()}
              onChange={this.onChangeInput2}
              value={this.state.id_puestoUpdate}
              required
@@ -610,13 +614,15 @@ class tablaDataEmpleado extends Component{
             <select
              className="browser-default custom-select "
              type="select"
-             name="id_puestoUpdate"
-             id="id_puestoUpdate"
+             name="fk_nivelUpdate"
+             id="fk_nivelUpdate"
              onChange={this.onChangeInput2}
-             value={this.state.idUpdate}
+             value={this.state.fk_nivelUpdate}
+             
+
             //  required
               >
-              { this.state.getTablaNivel.map(rows=>{
+              { this.state.getTablaNivel.map(rows=>{            
                 return (
                 <option value={rows.id}>{rows.nivel}</option>
                 )
@@ -646,11 +652,12 @@ class tablaDataEmpleado extends Component{
           </Row>       
          
           <div style={{marginTop:"3%"}} className="text-center">
-              <MDBBtn color="info" type="submit">                   
+              <MDBBtn outline color="secondary" size='sm' type="submit">                   
                 GUARDAR
               </MDBBtn>
               <MDBBtn
-                color="danger"
+                outline color="danger"
+                size='sm'
                 onClick={e=>this.toggle()} >
               CANCELAR
               </MDBBtn>                   
@@ -666,9 +673,8 @@ class tablaDataEmpleado extends Component{
     </MDBContainer>
       </div>
 
-          const columns = ["ID","NO. EMPLEADO","NOMBRE", "AREA","DEPARTAMENTO", "CORREO","EXT.","OFICINA","EDITA","INF."];  
-         let data1 = this.state.tablaEmpledos.map((rows)=>{  
-          // console.log("esto es dat de tablaEmpledos",rows)
+          const columns = ["ID","NO. EMPLEADO","NOMBRE","DIRECCIÓN GENERAL","DEPARTAMENTO","CORREO","EXT.","EDITA","INF."];  
+         let data1 = this.state.tablaEmpledos.map((rows)=>{
     
               botonEditar =
                <div>            
@@ -682,15 +688,15 @@ class tablaDataEmpleado extends Component{
               <Button type="primary" shape="circle" size="large"
                 onClick={(e)=>this.informacion(rows)}
                 >
-              <MDBIcon  icon="info"  />
+              <MDBIcon  icon="info"/>
               </Button>
               </div> 
-             return([rows.id_empleado,rows.numEmpleado,rows.nombre +" "+ rows.apellidos,rows.nombreArea,rows.departamento,rows.correo,rows.ext,rows.nombreOficina,botonEditar,botonInformacion])
+             return([rows.id_empleado,rows.numEmpleado,rows.nombre +" "+ rows.apellidos,rows.nombreArea,rows.departamento,rows.correo,rows.ext,botonEditar,botonInformacion])
       
          })
          let tablaInicio = 
          <div>
-           <Card  style={{marginTop:"1%",width:"90%", marginLeft:"2%"}}>  
+           <Card  style={{marginTop:"1%",width:"100%" }}>  
            <MUIDataTable    
            title={"DIRECTORIO CEAV" }
            data={data1}

@@ -56,7 +56,6 @@ class catalogoArea extends Component{
     }
 
     onChangeInput = (e) =>{
-        // console.log("esto es onChangeInput",e)
         const {id,value} = e.target;
         this.setState({
             [id]:value
@@ -92,7 +91,6 @@ class catalogoArea extends Component{
            }
          })
            .then((response) => { 
-               console.log("esto es response",response)       
             if(response.data.data.signupDataAdmin.message === "Registro exitoso"){
                 swal({              
                title: "", 
